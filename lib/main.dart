@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'viewmodels/home_viewmodel.dart';
 import 'views/home_screen.dart';
 
 void main() {
 
-  runApp(const PhonePeDemo());
+  runApp(
 
+    ChangeNotifierProvider(
+
+      create: (_) => HomeViewModel(),
+
+      child: const PhonePeDemo(),
+
+    ),
+
+  );
 }
 
 class PhonePeDemo extends StatelessWidget {
@@ -21,9 +33,7 @@ class PhonePeDemo extends StatelessWidget {
       title: 'PhonePe Demo',
 
       theme: ThemeData(
-
         primaryColor: const Color(0xFF5F259F),
-
       ),
 
       home: const HomeScreen(),

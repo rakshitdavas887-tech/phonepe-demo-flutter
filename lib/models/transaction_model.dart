@@ -1,6 +1,7 @@
 class TransactionModel {
+
   final String title;
-  final String amount;
+  final double amount;
   final String date;
 
   TransactionModel({

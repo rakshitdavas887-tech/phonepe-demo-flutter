@@ -1,17 +1,37 @@
-# projects
+# PhonePe UI Demo (Flutter)
 
-PhonePe style UI demo app
+A modern **PhonePe inspired UI demo** built using **Flutter**.  
+This project demonstrates clean UI design, reusable widgets, and responsive layout.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- PhonePe style UI
+- Clean and modern layout
+- Material Design components
+- Reusable widgets structure
+- Cross platform support (Android, Windows, Web)
+- Beginner friendly Flutter architecture
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+
+### Home Screen
+- Total balance card
+- Quick action buttons
+- Clean layout inspired by PhonePe
+
+---
+
+## Tech Stack
+
+- Flutter
+- Dart
+- Material UI
+- Android Studio
+
+---
+
+## Project Structure

@@ -3,14 +3,15 @@ import 'package:provider/provider.dart';
 
 import '../../viewmodels/home_viewmodel.dart';
 
-import '../../widgets/balance_card.dart';
-import '../../widgets/quick_actions.dart';
+import '../../widgets/action_button.dart';
+import '../../widgets/banner_slider.dart';
+import '../../widgets/wallet_card.dart';
+import '../../widgets/bill_grid.dart';
 import '../../widgets/transaction_list.dart';
 
 import 'send_screen.dart';
-import 'add_money_screen.dart';
-import 'history_screen.dart';
 import 'scan_screen.dart';
+import 'history_screen.dart';
 import 'profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -25,26 +26,26 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
 
       appBar: AppBar(
-
+        backgroundColor: const Color(0xff5F259F),
         title: const Text("PhonePe"),
-
         actions: [
 
           IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {},
+          ),
 
+          IconButton(
             icon: const Icon(Icons.person),
-
             onPressed: () {
 
               Navigator.push(
-
                 context,
-
                 MaterialPageRoute(
-
                   builder: (_) => const ProfileScreen(),
                 ),
               );
+
             },
           ),
         ],
@@ -52,84 +53,201 @@ class HomeScreen extends StatelessWidget {
 
       body: SingleChildScrollView(
 
-        child: Padding(
+        padding: const EdgeInsets.all(16),
 
-          padding: const EdgeInsets.all(16),
+        child: Column(
 
-          child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
 
-            children: [
+          children: [
 
-              BalanceCard(
-                balance: vm.balance,
+            /// BALANCE CARD
+            Center(
+              child: Container(
+                padding: const EdgeInsets.all(18),
+
+                decoration: BoxDecoration(
+                  color: const Color(0xff5F259F),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+
+                child: Column(
+                  children: [
+
+                    const Text(
+                      "Total Balance",
+                      style: TextStyle(color: Colors.white70),
+                    ),
+
+                    Text(
+                      "₹ ${vm.balance}",
+                      style: const TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                  ],
+                ),
               ),
+            ),
 
-              const SizedBox(height: 25),
+            const SizedBox(height: 20),
 
-              QuickActions(
+            /// BANNER
+            const BannerSlider(),
 
-                onScanTap: () {
+            const SizedBox(height: 20),
 
-                  Navigator.push(
+            /// TRANSFER SECTION
+            const Text(
+              "Transfer Money",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
 
-                    context,
+            const SizedBox(height: 12),
 
-                    MaterialPageRoute(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
 
-                      builder: (_) => const ScanScreen(),
-                    ),
-                  );
-                },
+                ActionButton(
+                  icon: Icons.qr_code,
+                  label: "Scan",
+                  onTap: () {
 
-                onSendTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ScanScreen(),
+                      ),
+                    );
 
-                  Navigator.push(
+                  },
+                ),
 
-                    context,
+                ActionButton(
+                  icon: Icons.send,
+                  label: "Send",
+                  onTap: () {
 
-                    MaterialPageRoute(
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const SendScreen(),
+                      ),
+                    );
 
-                      builder: (_) => const SendScreen(),
-                    ),
-                  );
-                },
+                  },
+                ),
 
-                onBankTap: () {
+                ActionButton(
+                  icon: Icons.account_balance,
+                  label: "Bank",
+                  onTap: () {},
+                ),
 
-                  Navigator.push(
+                ActionButton(
+                  icon: Icons.history,
+                  label: "History",
+                  onTap: () {
 
-                    context,
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const HistoryScreen(),
+                      ),
+                    );
 
-                    MaterialPageRoute(
+                  },
+                ),
+              ],
+            ),
 
-                      builder: (_) => const AddMoneyScreen(),
-                    ),
-                  );
-                },
+            const SizedBox(height: 20),
 
-                onHistoryTap: () {
+            /// WALLET SECTION
+            const Text(
+              "Wallet",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
 
-                  Navigator.push(
+            const SizedBox(height: 10),
 
-                    context,
+            Row(
+              children: const [
 
-                    MaterialPageRoute(
+                Expanded(
+                  child: WalletCard(
+                    title: "PhonePe Wallet",
+                    subtitle: "₹ 200",
+                  ),
+                ),
 
-                      builder: (_) => const HistoryScreen(),
-                    ),
-                  );
-                },
-              ),
+                SizedBox(width: 10),
 
-              const SizedBox(height: 25),
+                Expanded(
+                  child: WalletCard(
+                    title: "Rewards",
+                    subtitle: "3 Coupons",
+                  ),
+                ),
+              ],
+            ),
 
-              TransactionList(
-                transactions: vm.transactions,
-              ),
-            ],
-          ),
+            const SizedBox(height: 20),
+
+            /// BILLS
+            const Text(
+              "Recharge & Bills",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(height: 12),
+
+            const BillGrid(),
+
+            const SizedBox(height: 20),
+
+            /// TRANSACTIONS
+            const Text(
+              "Recent Transactions",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(height: 12),
+
+            TransactionList(
+              transactions: vm.transactions,
+            ),
+
+          ],
         ),
       ),
+
+      bottomNavigationBar: BottomNavigationBar(
+
+        items: const [
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: "History",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Profile",
+          ),
+        ],
+
+      ),
+
     );
   }
 }

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'viewmodels/wallet_viewmodel.dart';
+import 'viewmodels/auth_viewmodel.dart';
 import 'views/screens/home_screen.dart';
 import 'views/screens/history_screen.dart';
 import 'views/screens/profile_screen.dart';
+import 'views/screens/login_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Ensure Firebase is configured correctly or this will fail
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -15,13 +21,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => WalletViewModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => WalletViewModel()),
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+      ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MainNavigation(),
+        home: AuthWrapper(),
       ),
     );
+  }
+}
+
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final authVM = Provider.of<AuthViewModel>(context);
+    
+    if (authVM.isLoggedIn) {
+      return const MainNavigation();
+    } else {
+      return const LoginScreen();
+    }
   }
 }
 

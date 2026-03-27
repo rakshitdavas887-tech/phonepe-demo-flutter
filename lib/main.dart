@@ -5,12 +5,12 @@ import 'theme/app_theme.dart';
 
 import 'viewmodels/auth_viewmodel.dart';
 import 'viewmodels/home_viewmodel.dart';
+import 'viewmodels/profile_viewmodel.dart';
 
 import 'views/screens/login_screen.dart';
 import 'views/screens/home_screen.dart';
 
 void main() {
-
   runApp(const MyApp());
 }
 
@@ -31,6 +31,10 @@ class MyApp extends StatelessWidget {
 
         ChangeNotifierProvider(
           create: (_) => HomeViewModel(),
+        ),
+
+        ChangeNotifierProvider(
+          create: (_) => ProfileViewModel(),
         ),
       ],
 

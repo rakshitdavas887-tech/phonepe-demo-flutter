@@ -11,6 +11,7 @@ import 'send_screen.dart';
 import 'add_money_screen.dart';
 import 'history_screen.dart';
 import 'scan_screen.dart';
+import 'profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
 
@@ -24,7 +25,29 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
 
       appBar: AppBar(
+
         title: const Text("PhonePe"),
+
+        actions: [
+
+          IconButton(
+
+            icon: const Icon(Icons.person),
+
+            onPressed: () {
+
+              Navigator.push(
+
+                context,
+
+                MaterialPageRoute(
+
+                  builder: (_) => const ProfileScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
 
       body: SingleChildScrollView(

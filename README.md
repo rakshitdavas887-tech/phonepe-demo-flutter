@@ -1,8 +1,10 @@
-<img width="1366" height="768" alt="phonepay" src="https://github.com/user-attachments/assets/cbab35e8-0564-4cbb-99b1-7ccbbeb58d11" />
+
 # PhonePe UI Demo (Flutter)
 
 A modern **PhonePe inspired UI demo** built using **Flutter**.  
 This project demonstrates clean UI design, reusable widgets, and responsive layout.
+<img width="1366" height="768" alt="phonepay1" src="https://github.com/user-attachments/assets/e49006bb-4bd7-49b7-8970-7aa1d4c1f787" />
+
 
 ---
 

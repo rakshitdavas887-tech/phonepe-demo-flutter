@@ -5,7 +5,7 @@ void main() {
 
   testWidgets('App loads test', (WidgetTester tester) async {
 
-    await tester.pumpWidget(const PhonePeDemo());
+    await tester.pumpWidget(const MyApp());
 
     expect(find.text("PhonePe"), findsOneWidget);
 

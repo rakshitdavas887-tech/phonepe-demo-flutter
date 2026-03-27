@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../viewmodels/home_viewmodel.dart';
+import '../viewmodels/wallet_viewmodel.dart';
 
 class TransactionList extends StatelessWidget {
   const TransactionList({super.key});
@@ -8,7 +8,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final vm = Provider.of<HomeViewModel>(context);
+    final vm = Provider.of<WalletViewModel>(context);
 
     return Card(
 

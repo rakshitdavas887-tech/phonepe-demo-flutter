@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../viewmodels/home_viewmodel.dart';
+import '../../viewmodels/wallet_viewmodel.dart';
 
 class SendScreen extends StatefulWidget {
   const SendScreen({super.key});
@@ -17,7 +17,7 @@ class _SendScreenState extends State<SendScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final vm = Provider.of<HomeViewModel>(context);
+    final vm = Provider.of<WalletViewModel>(context);
 
     return Scaffold(
 
@@ -55,10 +55,10 @@ class _SendScreenState extends State<SendScreen> {
             ElevatedButton(
 
               onPressed: () {
-
+                final amount = double.tryParse(amountController.text) ?? 0;
                 vm.sendMoney(
                   nameController.text,
-                  double.parse(amountController.text),
+                  amount,
                 );
 
                 Navigator.pop(context);

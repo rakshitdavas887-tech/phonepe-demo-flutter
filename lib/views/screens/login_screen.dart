@@ -6,6 +6,7 @@ import 'signup_screen.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+
   const LoginScreen({super.key});
 
   @override
@@ -17,12 +18,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
 
-    final authVM = Provider.of<AuthViewModel>(context);
+    final auth = context.read<AuthViewModel>();
 
     return Scaffold(
 
@@ -34,98 +33,131 @@ class _LoginScreenState extends State<LoginScreen> {
 
         padding: const EdgeInsets.all(20),
 
-        child: Form(
+        child: Column(
 
-          key: formKey,
+          children: [
 
-          child: Column(
+            TextField(
 
-            children: [
+              controller: emailController,
 
-              TextFormField(
-
-                controller: emailController,
-
-                decoration: const InputDecoration(
-                  labelText: "Email",
-                ),
-
-                validator: (value) {
-
-                  if (value == null || value.isEmpty) {
-                    return "Enter email";
-                  }
-
-                  return null;
-                },
+              style: const TextStyle(
+                color: Colors.black,
               ),
 
-              const SizedBox(height: 20),
+              decoration: const InputDecoration(
+                labelText: "Email",
+              ),
+            ),
 
-              TextFormField(
+            const SizedBox(height: 20),
 
-                controller: passwordController,
+            TextField(
 
-                obscureText: true,
+              controller: passwordController,
 
-                decoration: const InputDecoration(
-                  labelText: "Password",
-                ),
+              obscureText: true,
 
-                validator: (value) {
-
-                  if (value == null || value.length < 4) {
-                    return "Password min 4 char";
-                  }
-
-                  return null;
-                },
+              style: const TextStyle(
+                color: Colors.black,
               ),
 
-              const SizedBox(height: 30),
+              decoration: const InputDecoration(
+                labelText: "Password",
+              ),
+            ),
 
-              ElevatedButton(
+            const SizedBox(height: 30),
+
+            SizedBox(
+
+              width: double.infinity,
+
+              child: ElevatedButton(
+
+                style: ElevatedButton.styleFrom(
+
+                  backgroundColor: const Color(0xff5f259f),
+
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 14,
+                  ),
+
+                  shape: RoundedRectangleBorder(
+
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
 
                 onPressed: () {
 
-                  if (formKey.currentState!.validate()) {
+                  bool success = auth.login(
 
-                    bool success = authVM.login(
-                      emailController.text,
-                      passwordController.text,
-                    );
+                    email: emailController.text,
 
-                    if (success) {
-
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const HomeScreen(),
-                        ),
-                      );
-                    }
-                  }
-                },
-
-                child: const Text("Login"),
-              ),
-
-              TextButton(
-
-                onPressed: () {
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const SignupScreen(),
-                    ),
+                    password: passwordController.text,
                   );
+
+                  if(success){
+
+                    Navigator.pushReplacement(
+
+                      context,
+
+                      MaterialPageRoute(
+
+                        builder: (_) => const HomeScreen(),
+                      ),
+                    );
+                  }
+                  else{
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+
+                      const SnackBar(
+
+                        content: Text(
+                          "Invalid login",
+                        ),
+                      ),
+                    );
+                  }
                 },
 
-                child: const Text("Create account"),
-              )
-            ],
-          ),
+                child: const Text(
+                  "Login",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+
+            TextButton(
+
+              onPressed: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (_) => const SignupScreen(),
+                  ),
+                );
+              },
+
+              child: const Text(
+
+                "Create account",
+
+                style: TextStyle(
+                  color: Color(0xff5f259f),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -3,55 +3,47 @@ import 'package:flutter/material.dart';
 class AuthViewModel extends ChangeNotifier {
 
   String? _email;
+  String? _password;
   String? _name;
 
-  bool _isLoggedIn = false;
+  bool isLoggedIn = false;
 
-  bool get isLoggedIn => _isLoggedIn;
-  String? get email => _email;
-  String? get name => _name;
-
-  // LOGIN
-  bool login(String email, String password) {
-
-    if (email.isEmpty || password.isEmpty) {
-      return false;
-    }
-
-    _email = email;
-    _name = "User";
-
-    _isLoggedIn = true;
-
-    notifyListeners();
-
-    return true;
-  }
-
-  // SIGNUP
-  bool signup(String name, String email, String password) {
-
-    if (name.isEmpty || email.isEmpty || password.isEmpty) {
-      return false;
-    }
+  bool signup({
+    required String name,
+    required String email,
+    required String password,
+  }) {
 
     _name = name;
     _email = email;
-
-    _isLoggedIn = true;
+    _password = password;
 
     notifyListeners();
 
     return true;
   }
 
-  // LOGOUT
-  void logout() {
+  bool login({
+    required String email,
+    required String password,
+  }) {
 
-    _isLoggedIn = false;
-    _email = null;
-    _name = null;
+    if(email == _email && password == _password){
 
+      isLoggedIn = true;
+      notifyListeners();
+
+      return true;
+    }
+
+    return false;
+  }
+
+  void logout(){
+
+    isLoggedIn = false;
     notifyListeners();
   }
+
+  String get userName => _name ?? "User";
 }

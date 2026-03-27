@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../viewmodels/wallet_viewmodel.dart';
+
+import '../../viewmodels/home_viewmodel.dart';
+import '../../models/transaction_model.dart';
 
 class AddMoneyScreen extends StatefulWidget {
+
   const AddMoneyScreen({super.key});
 
   @override
@@ -10,36 +13,69 @@ class AddMoneyScreen extends StatefulWidget {
 }
 
 class _AddMoneyScreenState extends State<AddMoneyScreen> {
-  final controller = TextEditingController();
+
+  final amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<WalletViewModel>(context);
+
+    final vm = context.read<HomeViewModel>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Money")),
+
+      appBar: AppBar(
+        title: const Text("Add Money"),
+      ),
+
       body: Padding(
+
         padding: const EdgeInsets.all(20),
+
         child: Column(
+
           children: [
 
             TextField(
-              controller: controller,
+
+              controller: amountController,
+
               keyboardType: TextInputType.number,
+
               decoration: const InputDecoration(
-                labelText: "Enter Amount",
-                border: OutlineInputBorder(),
+                labelText: "Enter amount",
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
             ElevatedButton(
+
               onPressed: () {
-                vm.addMoney(double.parse(controller.text));
+
+                double amount =
+                double.parse(amountController.text);
+
+                vm.balance += amount;
+
+                vm.transactions.insert(
+
+                  0,
+
+                  TransactionModel(
+
+                    title: "Added Money",
+
+                    amount: amount,
+
+                    date: "Now",
+                  ),
+                );
+
+                vm.notifyListeners();
 
                 Navigator.pop(context);
               },
+
               child: const Text("Add Money"),
             ),
           ],

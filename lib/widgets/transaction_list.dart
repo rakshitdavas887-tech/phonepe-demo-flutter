@@ -1,57 +1,102 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../viewmodels/wallet_viewmodel.dart';
 
 class TransactionList extends StatelessWidget {
-  const TransactionList({super.key});
+
+  final List transactions;
+
+  const TransactionList({
+
+    super.key,
+    required this.transactions,
+  });
 
   @override
   Widget build(BuildContext context) {
 
-    final vm = Provider.of<WalletViewModel>(context);
+    return Column(
 
-    return Card(
+      children: transactions.map((tx){
 
-      margin: const EdgeInsets.all(16),
+        return Container(
 
-      child: Column(
+          margin: const EdgeInsets.only(bottom: 12),
 
-        children: [
+          padding: const EdgeInsets.all(14),
 
-          const Padding(
-            padding: EdgeInsets.all(12),
-            child: Text(
-              "Recent Transactions",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+          decoration: BoxDecoration(
+
+            color: Colors.white,
+
+            borderRadius: BorderRadius.circular(12),
+
+            boxShadow: const [
+
+              BoxShadow(
+
+                color: Colors.black12,
+
+                blurRadius: 6,
+              )
+            ],
           ),
 
-          ...vm.transactions.map((tx) {
+          child: Row(
 
-            return ListTile(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-              leading: const CircleAvatar(
-                backgroundColor: Color(0xFFEDE7F6),
-                child: Icon(Icons.payment, color: Color(0xFF5F259F)),
+            children: [
+
+              Row(
+
+                children: [
+
+                  const Icon(
+
+                    Icons.account_balance_wallet,
+
+                    color: Color(0xff5f259f),
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  Column(
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: [
+
+                      Text(tx.title),
+
+                      Text(
+
+                        tx.date,
+
+                        style: const TextStyle(
+
+                          fontSize: 12,
+
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
 
-              title: Text(tx.title),
+              Text(
 
-              subtitle: Text(tx.date),
-
-              trailing: Text(
-
-                "₹ ${tx.amount.toStringAsFixed(0)}",
+                "₹ ${tx.amount}",
 
                 style: const TextStyle(
+
                   fontWeight: FontWeight.bold,
                 ),
-              ),
-            );
+              )
+            ],
+          ),
+        );
 
-          }),
-        ],
-      ),
+      }).toList(),
     );
   }
 }

@@ -8,22 +8,47 @@ class QuickActions extends StatelessWidget {
   final VoidCallback onHistoryTap;
 
   const QuickActions({
+
     super.key,
+
     required this.onScanTap,
     required this.onSendTap,
     required this.onBankTap,
     required this.onHistoryTap,
   });
 
-  Widget buildAction(
+  @override
+  Widget build(BuildContext context) {
+
+    return Row(
+
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+      children: [
+
+        actionButton(Icons.qr_code, "Scan", onScanTap),
+
+        actionButton(Icons.send, "Send", onSendTap),
+
+        actionButton(Icons.account_balance, "Bank", onBankTap),
+
+        actionButton(Icons.history, "History", onHistoryTap),
+      ],
+    );
+  }
+
+  Widget actionButton(
+
       IconData icon,
-      String label,
+      String text,
       VoidCallback onTap,
       ) {
 
-    return GestureDetector(
+    return InkWell(
 
       onTap: onTap,
+
+      borderRadius: BorderRadius.circular(40),
 
       child: Column(
 
@@ -31,58 +56,40 @@ class QuickActions extends StatelessWidget {
 
           Container(
 
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(18),
 
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
 
               color: Colors.white,
+
               shape: BoxShape.circle,
 
+              boxShadow: [
+
+                BoxShadow(
+
+                  color: Colors.black12,
+
+                  blurRadius: 8,
+                ),
+              ],
             ),
 
             child: Icon(
-              icon,
-              color: Color(0xFF5F259F),
-            ),
 
+              icon,
+
+              color: const Color(0xff5f259f),
+
+              size: 26,
+            ),
           ),
 
           const SizedBox(height: 8),
 
-          Text(label),
-
+          Text(text),
         ],
-
       ),
-
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Padding(
-
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-
-      child: Row(
-
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-        children: [
-
-          buildAction(Icons.qr_code, "Scan", onScanTap),
-
-          buildAction(Icons.send, "Send", onSendTap),
-
-          buildAction(Icons.account_balance, "Bank", onBankTap),
-
-          buildAction(Icons.history, "History", onHistoryTap),
-
-        ],
-
-      ),
-
     );
   }
 }

@@ -1,90 +1,110 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../viewmodels/wallet_viewmodel.dart';
+import '../../viewmodels/home_viewmodel.dart';
+
 import '../../widgets/balance_card.dart';
 import '../../widgets/quick_actions.dart';
 import '../../widgets/transaction_list.dart';
+
 import 'send_screen.dart';
 import 'add_money_screen.dart';
 import 'history_screen.dart';
+import 'scan_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    final walletVM = Provider.of<WalletViewModel>(context);
+    final vm = context.watch<HomeViewModel>();
 
     return Scaffold(
 
       appBar: AppBar(
-        backgroundColor: const Color(0xFF5F259F),
         title: const Text("PhonePe"),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Icon(Icons.account_circle),
-          )
-        ],
       ),
 
       body: SingleChildScrollView(
 
-        child: Column(
+        child: Padding(
 
-          children: [
+          padding: const EdgeInsets.all(16),
 
-            const SizedBox(height: 20),
+          child: Column(
 
-            /// balance card
-            BalanceCard(balance: walletVM.balance),
+            children: [
 
-            const SizedBox(height: 20),
+              BalanceCard(
+                balance: vm.balance,
+              ),
 
-            /// quick actions
-            QuickActions(
+              const SizedBox(height: 25),
 
-              onScanTap: () {},
+              QuickActions(
 
-              onSendTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const SendScreen(),
-                  ),
-                );
-              },
+                onScanTap: () {
 
-              onBankTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const AddMoneyScreen(),
-                  ),
-                );
-              },
+                  Navigator.push(
 
-              onHistoryTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const HistoryScreen(),
-                  ),
-                );
-              },
+                    context,
 
-            ),
+                    MaterialPageRoute(
 
-            const SizedBox(height: 20),
+                      builder: (_) => const ScanScreen(),
+                    ),
+                  );
+                },
 
-            /// transaction list
-            const TransactionList(),
+                onSendTap: () {
 
-            const SizedBox(height: 20),
+                  Navigator.push(
 
-          ],
+                    context,
+
+                    MaterialPageRoute(
+
+                      builder: (_) => const SendScreen(),
+                    ),
+                  );
+                },
+
+                onBankTap: () {
+
+                  Navigator.push(
+
+                    context,
+
+                    MaterialPageRoute(
+
+                      builder: (_) => const AddMoneyScreen(),
+                    ),
+                  );
+                },
+
+                onHistoryTap: () {
+
+                  Navigator.push(
+
+                    context,
+
+                    MaterialPageRoute(
+
+                      builder: (_) => const HistoryScreen(),
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 25),
+
+              TransactionList(
+                transactions: vm.transactions,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../viewmodels/wallet_viewmodel.dart';
+
+import '../../viewmodels/home_viewmodel.dart';
+import '../../widgets/transaction_list.dart';
 
 class HistoryScreen extends StatelessWidget {
+
   const HistoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<WalletViewModel>(context);
+
+    final vm = context.watch<HomeViewModel>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Transaction History")),
-      body: ListView.builder(
-        itemCount: vm.transactions.length,
-        itemBuilder: (context, index) {
-          final tx = vm.transactions[index];
 
-          return ListTile(
-            leading: const Icon(Icons.payment),
-            title: Text(tx.title),
-            subtitle: Text(tx.date),
-            trailing: Text(
-              "₹ ${tx.amount.toStringAsFixed(0)}",
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          );
-        },
+      appBar: AppBar(
+        title: const Text("Transaction History"),
+      ),
+
+      body: Padding(
+
+        padding: const EdgeInsets.all(16),
+
+        child: TransactionList(
+
+          transactions: vm.transactions,
+        ),
       ),
     );
   }

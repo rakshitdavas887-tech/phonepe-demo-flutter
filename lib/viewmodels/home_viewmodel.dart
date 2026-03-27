@@ -9,22 +9,35 @@ class HomeViewModel extends ChangeNotifier {
 
     TransactionModel(
       title: "Mobile Recharge",
-      amount: -199,
+      amount: -199.0,
       date: "Today",
     ),
 
     TransactionModel(
       title: "Received from Rahul",
-      amount: 500,
+      amount: 500.0,
       date: "Today",
     ),
 
     TransactionModel(
       title: "Electric Bill",
-      amount: -1200,
+      amount: -1200.0,
       date: "Yesterday",
     ),
   ];
+
+  void addMoney(double amount) {
+    balance += amount;
+    transactions.insert(
+      0,
+      TransactionModel(
+        title: "Added to Wallet",
+        amount: amount,
+        date: "Now",
+      ),
+    );
+    notifyListeners();
+  }
 
   void sendMoney(String name, double amount) {
 

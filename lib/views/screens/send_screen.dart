@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../viewmodels/wallet_viewmodel.dart';
+import '../../viewmodels/home_viewmodel.dart';
 
 class SendScreen extends StatefulWidget {
+
   const SendScreen({super.key});
 
   @override
@@ -17,16 +18,16 @@ class _SendScreenState extends State<SendScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final vm = Provider.of<WalletViewModel>(context);
+    final vm = context.read<HomeViewModel>();
 
     return Scaffold(
 
       appBar: AppBar(
         title: const Text("Send Money"),
-        backgroundColor: const Color(0xFF5F259F),
       ),
 
       body: Padding(
+
         padding: const EdgeInsets.all(20),
 
         child: Column(
@@ -36,7 +37,7 @@ class _SendScreenState extends State<SendScreen> {
             TextField(
               controller: nameController,
               decoration: const InputDecoration(
-                labelText: "Receiver Name",
+                labelText: "Receiver name",
               ),
             ),
 
@@ -55,17 +56,18 @@ class _SendScreenState extends State<SendScreen> {
             ElevatedButton(
 
               onPressed: () {
-                final amount = double.tryParse(amountController.text) ?? 0;
+
                 vm.sendMoney(
+
                   nameController.text,
-                  amount,
+
+                  double.parse(amountController.text),
                 );
 
                 Navigator.pop(context);
               },
 
               child: const Text("Send"),
-
             ),
           ],
         ),

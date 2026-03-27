@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../viewmodels/auth_viewmodel.dart';
 import 'home_screen.dart';
 
@@ -18,91 +17,73 @@ class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
 
-    final authVM = Provider.of<AuthViewModel>(context);
+    final auth = context.read<AuthViewModel>();
 
     return Scaffold(
 
-      appBar: AppBar(
-        title: const Text("Signup"),
-      ),
+      appBar: AppBar(title: const Text("Signup")),
 
       body: Padding(
 
         padding: const EdgeInsets.all(20),
 
-        child: Form(
+        child: Column(
 
-          key: formKey,
+          children: [
 
-          child: Column(
+            TextField(
 
-            children: [
+              controller: nameController,
+              decoration: const InputDecoration(labelText: "Name"),
+            ),
 
-              TextFormField(
+            const SizedBox(height: 20),
 
-                controller: nameController,
+            TextField(
 
-                decoration: const InputDecoration(
-                  labelText: "Name",
-                ),
-              ),
+              controller: emailController,
+              decoration: const InputDecoration(labelText: "Email"),
+            ),
 
-              const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-              TextFormField(
+            TextField(
 
-                controller: emailController,
+              controller: passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(labelText: "Password"),
+            ),
 
-                decoration: const InputDecoration(
-                  labelText: "Email",
-                ),
-              ),
+            const SizedBox(height: 30),
 
-              const SizedBox(height: 20),
+            ElevatedButton(
 
-              TextFormField(
+              onPressed: () {
 
-                controller: passwordController,
+                auth.signup(
 
-                obscureText: true,
+                  name: nameController.text,
+                  email: emailController.text,
+                  password: passwordController.text,
+                );
 
-                decoration: const InputDecoration(
-                  labelText: "Password",
-                ),
-              ),
+                Navigator.pushReplacement(
 
-              const SizedBox(height: 30),
+                  context,
 
-              ElevatedButton(
+                  MaterialPageRoute(
 
-                onPressed: () {
+                    builder: (_) => const HomeScreen(),
+                  ),
+                );
+              },
 
-                  bool success = authVM.signup(
-                    nameController.text,
-                    emailController.text,
-                    passwordController.text,
-                  );
-
-                  if (success) {
-
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const HomeScreen(),
-                      ),
-                    );
-                  }
-                },
-
-                child: const Text("Signup"),
-              ),
-            ],
-          ),
+              child: const Text("Signup"),
+            )
+          ],
         ),
       ),
     );

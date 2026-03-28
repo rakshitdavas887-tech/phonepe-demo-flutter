@@ -206,7 +206,7 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 12),
 
-            const BillGrid(),
+            const BillsGrid(),
 
             const SizedBox(height: 20),
 

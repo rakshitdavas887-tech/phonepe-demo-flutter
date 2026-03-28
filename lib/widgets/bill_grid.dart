@@ -1,44 +1,89 @@
 import 'package:flutter/material.dart';
 
-class BillGrid extends StatelessWidget {
-  const BillGrid({super.key});
+class BillsGrid extends StatelessWidget {
+
+  const BillsGrid({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    final items = [
-      {"icon": Icons.phone_android, "label": "Recharge"},
-      {"icon": Icons.lightbulb, "label": "Electric"},
-      {"icon": Icons.tv, "label": "DTH"},
-      {"icon": Icons.local_gas_station, "label": "Gas"},
-    ];
+    return GridView.count(
 
-    return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: items.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-      ),
-      itemBuilder: (_, i) {
 
-        final item = items[i];
+      physics:
+      const NeverScrollableScrollPhysics(),
 
-        return Column(
-          children: [
+      crossAxisCount: 4,
 
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(item["icon"] as IconData,
-                  color: const Color(0xff5F259F)),
-            ),
+      children: const [
 
-            const SizedBox(height: 6),
+        item(Icons.phone_android,
+            "Mobile"),
 
-            Text(item["label"] as String),
-          ],
-        );
-      },
+        item(Icons.qr_code,
+            "Scan QR"),
+
+        item(Icons.lightbulb,
+            "Electric"),
+
+        item(Icons.tv,
+            "DTH"),
+
+      ],
+
     );
+
   }
+
+}
+
+class item extends StatelessWidget {
+
+  final IconData icon;
+  final String label;
+
+  const item(this.icon, this.label,
+      {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Column(
+
+      children: [
+
+        CircleAvatar(
+
+          backgroundColor:
+          Colors.white,
+
+          child: Icon(
+
+            icon,
+
+            color:
+            Color(0xff5F259F),
+
+          ),
+
+        ),
+
+        const SizedBox(height: 6),
+
+        Text(
+
+          label,
+
+          style:
+          TextStyle(fontSize: 11),
+
+        ),
+
+      ],
+
+    );
+
+  }
+
 }
